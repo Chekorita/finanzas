@@ -1,11 +1,11 @@
 START TRANSACTION;
--- El drop database no es tan necesario, yo lo tengo para limpieza de mi base
+#El drop database no es tan necesario, yo lo tengo para limpieza de mi base
 DROP DATABASE IF EXISTS `finanzas`;
--- Creamos la base de datos
+#Creamos la base de datos
 CREATE DATABASE IF NOT EXISTS `finanzas` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `finanzas`;
 
---Creamos las tablas
+#Creamos las tablas
 CREATE TABLE `cuenta_monetaria` (
   `id_cuenta` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL COMMENT 'Nombre de la cuenta, ya sea el nombre del banco o que se diga que es el dinero de tu cartera',
@@ -191,7 +191,7 @@ CREATE TABLE `usuarios_edit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 
--- Creamos las llaves primarias
+#Creamos las llaves primarias
 ALTER TABLE `cuenta_monetaria`
   ADD PRIMARY KEY (`id_cuenta`);
 
@@ -241,7 +241,7 @@ ALTER TABLE `usuarios_edit`
   ADD PRIMARY KEY (`id_modificacion`);
 
 
--- Las llaves autoincrementables
+#Las llaves autoincrementables
 ALTER TABLE `cuenta_monetaria`
   MODIFY `id_cuenta` int(11) NOT NULL AUTO_INCREMENT;
 
@@ -291,7 +291,7 @@ ALTER TABLE `usuarios_edit`
   MODIFY `id_modificacion` int(11) NOT NULL AUTO_INCREMENT;
 
 
--- Creamos las llaves foraneas
+#Creamos las llaves foraneas
 ALTER TABLE `cuenta_monetaria`
   ADD CONSTRAINT `cuenta_monetaria_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 
@@ -323,10 +323,10 @@ ALTER TABLE `tipos_ingresos`
   ADD CONSTRAINT `tipos_ingresos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 
 
--- creamos triggers para las tablas de edición
+#Creamos triggers para las tablas de edición
 DELIMITER $$
 
--- Triggers para las tabla cuenta_monetaria
+#Triggers para las tabla cuenta_monetaria
 CREATE TRIGGER `cuenta_monetaria_after_insert` AFTER INSERT ON `cuenta_monetaria`
 FOR EACH ROW
 BEGIN
@@ -345,7 +345,7 @@ BEGIN
   INSERT INTO cuenta_monetaria_edit (id_cuenta, nombre, fondo, tipo, estado, id_usuario, tipo_modificacion, fecha_modificacion) VALUES (OLD.id_cuenta, OLD.nombre, OLD.fondo, OLD.tipo, OLD.estado, OLD.id_usuario, 3, NOW());
 END$$
 
--- Triggers para las tabla gastos
+#Triggers para las tabla gastos
 CREATE TRIGGER `gastos_after_insert` AFTER INSERT ON `gastos`
 FOR EACH ROW
 BEGIN
@@ -364,7 +364,7 @@ BEGIN
   INSERT INTO gastos_edit (id_gasto, monto, descripcion, id_tipo_gasto, id_persona, id_cuenta, id_usuario, tipo_modificacion, fecha_modificacion) VALUES (OLD.id_gasto, OLD.monto, OLD.descripcion, OLD.id_tipo_gasto, OLD.id_persona, OLD.id_cuenta, OLD.id_usuario, 3, NOW());
 END$$
 
--- Triggers para las tabla ingresos
+#Triggers para las tabla ingresos
 CREATE TRIGGER `ingresos_after_insert` AFTER INSERT ON `ingresos`
 FOR EACH ROW
 BEGIN
@@ -383,7 +383,7 @@ BEGIN
   INSERT INTO ingresos_edit (id_ingreso, monto, descripcion, id_tipo_ingreso, id_persona, id_cuenta, id_usuario, tipo_modificacion, fecha_modificacion) VALUES (OLD.id_ingreso, OLD.monto, OLD.descripcion, OLD.id_tipo_ingreso, OLD.id_persona, OLD.id_cuenta, OLD.id_usuario, 3, NOW());
 END$$
 
--- Triggers para las tabla personas
+#Triggers para las tabla personas
 CREATE TRIGGER `personas_after_insert` AFTER INSERT ON `personas`
 FOR EACH ROW
 BEGIN
@@ -402,7 +402,7 @@ BEGIN
   INSERT INTO personas_edit (id_persona, nombre, apodo, id_usuario, tipo_modificacion, fecha_modificacion) VALUES (OLD.id_persona, OLD.nombre, OLD.apodo, OLD.id_usuario, 3, NOW());
 END$$
 
--- Triggers para las tabla presupuestos
+#Triggers para las tabla presupuestos
 CREATE TRIGGER `presupuestos_after_insert` AFTER INSERT ON `presupuestos`
 FOR EACH ROW
 BEGIN
@@ -421,7 +421,7 @@ BEGIN
   INSERT INTO presupuestos_edit (id_presupuesto, nombre, monto, id_tipo_gasto, estado, id_usuario, tipo_modificacion, fecha_modificacion) VALUES (OLD.id_presupuesto, OLD.nombre, OLD.monto, OLD.id_tipo_gasto, OLD.estado, OLD.id_usuario, 3, NOW());
 END$$
 
--- Triggers para las tabla tipos_gastos
+#Triggers para las tabla tipos_gastos
 CREATE TRIGGER `tipos_gastos_after_insert` AFTER INSERT ON `tipos_gastos`
 FOR EACH ROW
 BEGIN
@@ -440,7 +440,7 @@ BEGIN
   INSERT INTO tipos_gastos_edit (id_tipo_gasto, nombre, tipo, requiere_persona, id_usuario, tipo_modificacion, fecha_modificacion) VALUES (OLD.id_tipo_gasto, OLD.nombre, OLD.tipo, OLD.requiere_persona, OLD.id_usuario, 3, NOW());
 END$$
 
--- Triggers para las tabla tipos_ingresos
+#Triggers para las tabla tipos_ingresos
 CREATE TRIGGER `tipos_ingresos_after_insert` AFTER INSERT ON `tipos_ingresos`
 FOR EACH ROW
 BEGIN
@@ -459,7 +459,7 @@ BEGIN
   INSERT INTO tipos_ingresos_edit (id_tipo_ingreso, nombre, tipo, id_usuario, tipo_modificacion, fecha_modificacion) VALUES (OLD.id_tipo_ingreso, OLD.nombre, OLD.tipo, OLD.id_usuario, 3, NOW());
 END$$
 
--- Triggers para las tabla usuarios
+#Triggers para las tabla usuarios
 CREATE TRIGGER `usuarios_after_insert` AFTER INSERT ON `usuarios`
 FOR EACH ROW
 BEGIN
@@ -479,9 +479,6 @@ BEGIN
 END$$
 
 DELIMITER ;
-
-
-COMMIT;
 
 
 COMMIT;
