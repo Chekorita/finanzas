@@ -9,7 +9,7 @@ USE `finanzas`;
 CREATE TABLE `cuenta_monetaria` (
   `id_cuenta` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL COMMENT 'Nombre de la cuenta, ya sea el nombre del banco o que se diga que es el dinero de tu cartera',
-  `fondo` decimal(10,0) NOT NULL DEFAULT 0 COMMENT 'Se trata del dinero que contiene esa cuenta, se va sumando o restando según los ingresos y egresos que se registren, en caso de ser a disposición se inicializa en 0, en caso de ser de crédito, se le debe establecer el dinero inicial',
+  `fondo` float NOT NULL DEFAULT 0 COMMENT 'Se trata del dinero que contiene esa cuenta, se va sumando o restando según los ingresos y egresos que se registren, en caso de ser a disposición se inicializa en 0, en caso de ser de crédito, se le debe establecer el dinero inicial',
   `tipo` int(11) NOT NULL DEFAULT 1 COMMENT '1 = a disposición (como dinero físico, tarjetas de debito) estas son las que se cuentan para saber cuanto dinero dispones en el momento, 2 = Tarjetas de crédito, estas no se contabilizan para el dinero que tienes, pero si para poder manejar tus gastos de crédito',
   `estado` int(11) NOT NULL DEFAULT 1 COMMENT '1 = Activo, 2 = Inactivo, No se eliminan ya que quedaran para el registro de anteriores casos de años pasados',
   `id_usuario` int(11) NOT NULL COMMENT 'Es el ID del usuario al que esta ligada la cuenta',
@@ -21,7 +21,7 @@ CREATE TABLE `cuenta_monetaria_edit` (
   `id_modificacion` int(11) NOT NULL,
   `id_cuenta` int(11) NOT NULL COMMENT 'Es el ID de la cuenta que se esta modificando',
   `nombre` varchar(255) NOT NULL COMMENT 'Nombre de la cuenta, ya sea el nombre del banco o que se diga que es el dinero de tu cartera',
-  `fondo` decimal(10,0) NOT NULL COMMENT 'Se trata del dinero que contiene esa cuenta, se va sumando o restando según los ingresos y egresos que se registren, en caso de ser a disposición se inicializa en 0, en caso de ser de crédito, se le debe establecer el dinero inicial',
+  `fondo` float NOT NULL COMMENT 'Se trata del dinero que contiene esa cuenta, se va sumando o restando según los ingresos y egresos que se registren, en caso de ser a disposición se inicializa en 0, en caso de ser de crédito, se le debe establecer el dinero inicial',
   `tipo` int(11) NOT NULL COMMENT '1 = a disposición (como dinero físico, tarjetas de debito) estas son las que se cuentan para saber cuanto dinero dispones en el momento, 2 = Tarjetas de crédito, estas no se contabilizan para el dinero que tienes, pero si para poder manejar tus gastos de crédito',
   `estado` int(11) NOT NULL COMMENT '1 = Activo, 2 = Inactivo, No se eliminan ya que quedaran para el registro de anteriores casos de años pasados',
   `id_usuario` int(11) NOT NULL COMMENT 'Es el ID del usuario al que esta ligada la cuenta',
@@ -31,7 +31,7 @@ CREATE TABLE `cuenta_monetaria_edit` (
 
 CREATE TABLE `gastos` (
   `id_gasto` int(11) NOT NULL,
-  `monto` decimal(10,0) NOT NULL COMMENT 'Es el monto de dinero que estas ingresando',
+  `monto` float NOT NULL COMMENT 'Es el monto de dinero que estas ingresando',
   `descripcion` varchar(255) DEFAULT NULL COMMENT 'Una descripción opcional por si quieres ser mas detallado',
   `id_tipo_gasto` int(11) NOT NULL COMMENT 'ID del tipo de gasto que se esta teniendo, en caso de ser 0, significa que es de otro que no esta catalogado',
   `id_persona` int(11) NOT NULL DEFAULT 0 COMMENT 'Es el ID de la persona a la que se le esta haciendo el gasto en caso de ser necesario',
@@ -44,7 +44,7 @@ CREATE TABLE `gastos` (
 CREATE TABLE `gastos_edit` (
   `id_modificacion` int(11) NOT NULL,
   `id_gasto` int(11) NOT NULL COMMENT 'Es el ID del gasto que se esta modificando',
-  `monto` decimal(10,0) NOT NULL COMMENT 'Es el monto de dinero que estas ingresando',
+  `monto` float NOT NULL COMMENT 'Es el monto de dinero que estas ingresando',
   `descripcion` varchar(255) DEFAULT NULL COMMENT 'Una descripción opcional por si quieres ser mas detallado',
   `id_tipo_gasto` int(11) NOT NULL COMMENT 'ID del tipo de gasto que se esta teniendo, en caso de ser 0, significa que es de otro que no esta catalogado',
   `id_persona` int(11) NOT NULL DEFAULT 0 COMMENT 'Es el ID de la persona a la que se le esta haciendo el gasto en caso de ser necesario',
@@ -56,7 +56,7 @@ CREATE TABLE `gastos_edit` (
 
 CREATE TABLE `ingresos` (
   `id_ingreso` int(11) NOT NULL,
-  `monto` decimal(10,0) NOT NULL COMMENT 'Es el monto de dinero que estas ingresando',
+  `monto` float NOT NULL COMMENT 'Es el monto de dinero que estas ingresando',
   `descripcion` varchar(255) DEFAULT '' COMMENT 'Una descripción opcional por si quieres ser mas detallado',
   `id_tipo_ingreso` int(11) NOT NULL COMMENT 'ID del tipo de ingreso que se esta teniendo, en caso de ser 0, significa que es de otro que no esta catalogado',
   `id_persona` int(11) NOT NULL DEFAULT 0 COMMENT 'Es el ID de la persona registrada que te hizo el ingreso, eso en caso de que sea necesaria',
@@ -69,7 +69,7 @@ CREATE TABLE `ingresos` (
 CREATE TABLE `ingresos_edit` (
   `id_modificacion` int(11) NOT NULL,
   `id_ingreso` int(11) NOT NULL COMMENT 'Es el ID del ingreso que se esta modificando',
-  `monto` decimal(10,0) NOT NULL COMMENT 'Es el monto de dinero que estas ingresando',
+  `monto` float NOT NULL COMMENT 'Es el monto de dinero que estas ingresando',
   `descripcion` varchar(255) DEFAULT '' COMMENT 'Una descripción opcional por si quieres ser mas detallado',
   `id_tipo_ingreso` int(11) NOT NULL COMMENT 'ID del tipo de ingreso que se esta teniendo, en caso de ser 0, significa que es de otro que no esta catalogado',
   `id_persona` int(11) NOT NULL DEFAULT 0 COMMENT 'Es el ID de la persona registrada que te hizo el ingreso, eso en caso de que sea necesaria',
@@ -101,7 +101,7 @@ CREATE TABLE `personas_edit` (
 CREATE TABLE `presupuestos` (
   `id_presupuesto` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL COMMENT 'Nombre del presupuesto',
-  `monto` decimal(10,0) NOT NULL COMMENT 'Dinero con el que se cuenta para este presupuesto, no puede exceder el ingreso mensual',
+  `monto` float NOT NULL COMMENT 'Dinero con el que se cuenta para este presupuesto, no puede exceder el ingreso mensual',
   `id_tipo_gasto` int(11) NOT NULL COMMENT 'ID del tipo de gasto que seria para este presupuesto',
   `estado` int(11) NOT NULL COMMENT '1 = Activo, 2= Inactivo',
   `id_usuario` int(11) NOT NULL COMMENT 'ID del usuario que genero este presupuesto',
@@ -113,7 +113,7 @@ CREATE TABLE `presupuestos_edit` (
   `id_modificacion` int(11) NOT NULL,
   `id_presupuesto` int(11) NOT NULL COMMENT 'Es el ID del presupuesto que se esta modificando',
   `nombre` varchar(255) NOT NULL COMMENT 'Nombre del presupuesto',
-  `monto` decimal(10,0) NOT NULL COMMENT 'Dinero con el que se cuenta para este presupuesto, no puede exceder el ingreso mensual',
+  `monto` float NOT NULL COMMENT 'Dinero con el que se cuenta para este presupuesto, no puede exceder el ingreso mensual',
   `id_tipo_gasto` int(11) NOT NULL COMMENT 'ID del tipo de gasto que seria para este presupuesto',
   `estado` int(11) NOT NULL COMMENT '1 = Activo, 2= Inactivo',
   `id_usuario` int(11) NOT NULL COMMENT 'ID del usuario que genero este presupuesto',
@@ -169,7 +169,7 @@ CREATE TABLE `usuarios` (
   `paterno` varchar(255) NOT NULL COMMENT 'Apellido paterno',
   `materno` varchar(255) NOT NULL COMMENT 'Apellido materno',
   `nombre` varchar(255) NOT NULL COMMENT 'Nombre del usuario',
-  `ingreso_mensual` decimal(10,0) NOT NULL DEFAULT 0 COMMENT 'Es el ingreso mensual que tiene el usuario, será usado para la creación de presupuestos, en caso de estar en 0, no se podrá hacer presupuestos',
+  `ingreso_mensual` float NOT NULL DEFAULT 0 COMMENT 'Es el ingreso mensual que tiene el usuario, será usado para la creación de presupuestos, en caso de estar en 0, no se podrá hacer presupuestos',
   `estado` int(1) NOT NULL DEFAULT 1 COMMENT '1 = Activo, 2 = Inactivo',
   `onCreate` timestamp NOT NULL DEFAULT current_timestamp(),
   `onUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -184,7 +184,7 @@ CREATE TABLE `usuarios_edit` (
   `paterno` varchar(255) NOT NULL COMMENT 'Apellido paterno',
   `materno` varchar(255) NOT NULL COMMENT 'Apellido materno',
   `nombre` varchar(255) NOT NULL COMMENT 'Nombre del usuario',
-  `ingreso_mensual` decimal(10,0) NOT NULL DEFAULT 0 COMMENT 'Es el ingreso mensual que tiene el usuario, será usado para la creación de presupuestos, en caso de estar en 0, no se podrá hacer presupuestos',
+  `ingreso_mensual` float NOT NULL DEFAULT 0 COMMENT 'Es el ingreso mensual que tiene el usuario, será usado para la creación de presupuestos, en caso de estar en 0, no se podrá hacer presupuestos',
   `estado` int(1) NOT NULL DEFAULT 1 COMMENT '1 = Activo, 2 = Inactivo',
   `tipo_modificacion` int(11) NOT NULL COMMENT '1 = Creación, 2 = Modificación, 3 = Eliminación',
   `fecha_modificacion` timestamp NOT NULL DEFAULT current_timestamp()
@@ -479,6 +479,9 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+COMMIT;
 
 
 COMMIT;
