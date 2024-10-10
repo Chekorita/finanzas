@@ -1,5 +1,6 @@
 <?php
 	define('METHOD', 'AES-256-CBC');
+	//La key y el IV se cambiaran por las que se deban poner en produccion, estas son ejemplo y no es necesario que conserves las mismas
 	define('SECRET_KEY', 'K2K17iU4ML');
 	define('SECRET_IV', '6000456817');
 	class Crypto{

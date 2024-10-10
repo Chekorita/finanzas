@@ -72,3 +72,7 @@ function cierra_ojito(contenedor_contrasena, contenedor_icono){
     icono.classList.remove("fa-eye");
     icono.classList.add("fa-eye-slash");
 }
+
+function nuevo_usuario(){
+    postAndRedirect("./vista_registro_usuario.php", {});
+}

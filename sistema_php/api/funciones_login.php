@@ -51,7 +51,7 @@
             }
             if(!is_object($usuario) || is_null($usuario)){
                 $respuesta->estado = 2;
-                $respuesta->mensaje = "DATOS DE ACCESO INCORRECTOS O NO ENCONTRADOS.";
+                $respuesta->mensaje = "DATOS DE ACCESO NO ENCONTRADOS.";
                 return $respuesta;
             }
             $contrasena_temp = "{$parametros->contrasena}{$palabra_sitio}{$usuario->random}";

@@ -1,7 +1,5 @@
 <?php
     include './config/variables.php';
-    include CONFIG.'database.php';
-	include FUNCTIONS.'funciones_generales.php';
 	$config = [
 		"nombre" => "Inicio de sesión",
 		"titulo" => "Inicio de sesión",
@@ -47,7 +45,7 @@
 							<label for="password" class="form-label fw-bold">Contraseña:</label>
                             <div class="input-group mb-3">
                                 <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" autocorrect="off" autocapitalize="off" required>
-                                <button class="btn btn-outline-secondary" onmouseover="abre_ojito('password','ico-ojito'); return false;" onmouseout="cierra_ojito('password','ico-ojito'); return false;" type="button" id="btn-editar-usuario"><i id = "ico-ojito" class="fa-solid fa-eye-low-vision"></i></button>
+                                <button class="btn btn-outline-secondary" onmouseover="abre_ojito('password','ico-ojito'); return false;" onmouseout="cierra_ojito('password','ico-ojito'); return false;" type="button" id="btn-ver-contrasena"><i id = "ico-ojito" class="fa-solid fa-eye-low-vision"></i></button>
                             </div>
 						</div>
 						<div class="col my-2">
@@ -57,7 +55,15 @@
 							</a>
 						</div>
 					</div>
-					
+					<!-- Generar un texto que permita redirigir a un registro nuevo de usuario -->
+                    <div class="row row-cols-1">
+                        <div class="col my-2">
+                            <a href="#" onclick="nuevo_usuario(); return false;" class="btn btn-link form-control">
+                                <i class="fa-solid fa-user-plus"></i>&nbsp;
+                                <span>¿Deseas registrarte? Da clic aquí</span>
+                            </a>
+                        </div>
+                    </div>
 				</div>
 				<div class="card-footer text-muted">
 					<?php echo mb_strtoupper(NOMBRE_SISTEMA, 'UTF-8'); ?>
