@@ -24,7 +24,6 @@
 </div>
 
 <div id="large-header" class="large-header container-fluid contenedor-login">
-	<canvas id="demo-canvas"></canvas>
 	<div class="row mx-auto" id="tarjeta-login">
 		<div class="col">
 			<div class="card text-center shadow">

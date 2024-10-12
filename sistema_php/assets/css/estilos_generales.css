@@ -44,7 +44,7 @@ h1{
 
 #tarjeta-login{
 	width: 30rem;
-	margin: 1% auto;
+	margin: 5% auto;
 	border-radius: 5px;
 }
 
@@ -145,4 +145,22 @@ h1{
 	animation-delay: -295s;
 	transform-origin: -22vw 1vh;
 	box-shadow: -74vmin 0 9.844342241529901vmin currentColor;
+}
+
+.exito{
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	border: 1px solid #4F8A10;
+}
+
+.error{
+	color: #D8000C;
+	background-color: #FFBABA;
+	border: 1px solid #D8000C;
+}
+
+.informativo{
+	color: #00529B;
+	background-color: #BDE5F8;
+	border: 1px solid #00529B;
 }

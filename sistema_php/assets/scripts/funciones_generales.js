@@ -77,7 +77,7 @@ function postAndRedirect(url, postData) {
 	$(formElement).submit();
 }
 
-function limpiarCadena(string, espacios = ' ') {
+function limpiar_cadena(string, espacios = ' ') {
 	string = string.trim();
 	string = string.replace(
 		/á|à|ä|â|ª/g,
@@ -128,7 +128,7 @@ function limpiarCadena(string, espacios = ' ') {
 		'C'
 	);
 	string = string.replace(
-		/\\|¨|º|~|\||!|"|·|\(|\)|\?|'|¡|¿|\[|`|\]|}|\{|¨|´|>|<|;|:/g,
+		/\\|¨|º|~|\||!|"|·|\(|\)|\?|'|¡|¿|\[|`|\]|}|\{|¨|´|>|<|;|:1|\.|,/g,
 		''
 	);
 	string = string.replace(
@@ -144,7 +144,7 @@ function limpiarCadena(string, espacios = ' ') {
 	return string;
 }
 
-function limpiarCadenaParcial(string){
+function limpiar_cadena_parcial(string){
 	string = string.trim();
 	string = string.replace(
 		/\\|¨|\||·|'|`|¨|´|-|>|<|"|\+|&|~/g,
