@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     contenedor_bloqueo.classList.add("cargando_oculto");
 });
 
+//detectar eventos
 document.addEventListener("keydown", function(event) {
     if(event.key === "Enter"){
         registrar_usuario();
@@ -130,11 +131,61 @@ document.addEventListener("focusout", function(e){
     }
 });
 
+//verificaciones de los campos sin BD
 function revisar_contrasena(contrasena){
     var contrasena_valida = new RegExp("^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=-]).*$");
     return contrasena_valida.test(contrasena);
 }
 
+//verificaciones de los campos con BD
+async function revisar_usuario(usuario){
+    let contenedor_usuario = document.getElementById("usuario");
+    let contenedor_ayuda = document.getElementById("ayuda-usuario");
+    let contenedor_status = document.getElementById("contenedor-status");
+    contenedor_status.innerHTML = getAnimacionCarga("Verificando la disponibilidad del nombre de usuario...","secondary");
+    let url = "./api/funciones_bd.php";
+    let datos = new FormData();
+    datos.append("funcion", "verificar_usuario");
+    datos.append("usuario", usuario);
+    fetch(url, {
+        method: "POST",
+        body: datos
+    }).then(respuesta => respuesta.json())
+    .then((respuesta) => {
+        switch(respuesta.estado){
+            case 1:
+                contenedor_status.innerHTML = "";
+                contenedor_ayuda.innerHTML = "<span class=\"text-success\">NOMBRE DE USUARIO DISPONIBLE</span>";
+                contenedor_usuario.classList.remove("error");
+                contenedor_usuario.classList.add("exito");
+                validar_usuario = true;
+                revisar_boton_guardar();
+            break;
+            case 2:
+                contenedor_status.innerHTML = "";
+                contenedor_ayuda.innerHTML = "<span class=\"text-danger\">"+respuesta.mensaje+"</span>";
+                contenedor_usuario.classList.remove("exito");
+                contenedor_usuario.classList.add("error");
+                validar_usuario = false;
+                revisar_boton_guardar();
+            break;
+            default:
+                contenedor_status.innerHTML = "";
+                obtener_toast(tipo = "error", titulo = "ERROR INTERNO", mensaje = respuesta.mensaje);
+                validar_usuario = false;
+                revisar_boton_guardar();
+            break;
+        }
+    })
+    .catch((error) => {
+        contenedor_status.innerHTML = "";
+        obtener_toast(tipo = "error", titulo = "ERROR", mensaje = "No se pudo conectar con el servidor");
+        validar_usuario = false;
+        revisar_boton_guardar();
+    });
+}
+
+//funciones normales
 function regresar_login(){
     window.location.href = "./index.php";
 }
@@ -163,6 +214,7 @@ function cierra_ojito(contenedor_contrasena, contenedor_icono){
     icono.classList.add("fa-eye-slash");
 }
 
+//funciones de registro y verificación
 function registrar_usuario(){
     if(verificar_datos()){
         Swal.fire({

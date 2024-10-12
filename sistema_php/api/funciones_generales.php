@@ -44,7 +44,7 @@
 		return (object)$notificaciones;
 	}
 
-	function limpiarCadena($string,$espacios=' '){ //si no recibe parametro en espacios quita espacios en blanco
+	function limpiar_cadena($string,$espacios=' '){ //si no recibe parametro en espacios quita espacios en blanco
 		$string = trim($string);
 		$string = str_replace(
 			array('á', 'à', 'ä', 'â', 'ª', 'Á', 'À', 'Â', 'Ä'),
@@ -79,8 +79,8 @@
 		$string = str_replace(
 			array("\\", "¨", "º","~", "\"",
 				"|", "!", "·", "/", "¡",
-				"(", ")", "?", "'", "]",
-				"¿", "[", "`", "´", "¨",
+				"(", ")", "?", "'", "]", ",",
+				"¿", "[", "`", "´", "¨", ".", 
 				"}", "{", ">", "< ", ";", ":"),
 			'',
 			$string
@@ -99,7 +99,7 @@
 		return $string;
 	}
 
-	function limpiarCadenaParcial($string){
+	function limpiar_cadena_parcial($string){
 		$string = trim($string);
 		$string = str_replace(
 			array("\\", "¨", "-", "¨", "|",

@@ -15,6 +15,7 @@
 		exit;
 	}
 
+	//lo devuelve en un objeto
 	function realizar_consulta(string $sql, array $parametros = []): object | bool{
 		global $conPDO;
 		$consulta = $conPDO->prepare($sql);
@@ -43,13 +44,14 @@
 		endif;
 		$consulta->execute();
 		$resultado = $consulta->fetchObject();
-		if($resultado !== null || $resultado !== false){
+		if($resultado !== null && $resultado !== false){
 			return $resultado;
 		}else{
 			return false;
 		}
 	}
 
+	//lo devuelve en un array
 	function realizar_consulta_array(string $sql, array $parametros = []): array | bool{
 		global $conPDO;
 		$consulta = $conPDO->prepare($sql);
@@ -78,10 +80,9 @@
 		endif;
 		$consulta->execute();
 		$resultado = $consulta->fetchAll();
-		if($resultado != null || $resultado != false){
+		if($resultado != null && $resultado != false){
 			return $resultado;
-		}
-		else{
+		}else{
 			return false;
 		}
 	}
