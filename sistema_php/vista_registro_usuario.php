@@ -35,12 +35,12 @@
 								<div class="col text-start">
 									<label for="apellido_paterno" class="form-label fw-bold">Apellido paterno *:</label>
 									<input class="form-control" type="text" name="apellido_paterno" id="apellido_paterno" placeholder="Apellido paterno" autocorrect="off" autocapitalize="off" aria-describedby="ayuda-apellido_paterno" required>
-									<div id="ayuda-apellido_paterno" class="form-text"></div>
+									<div id="ayuda-apellido-paterno" class="form-text"></div>
 								</div>
 								<div class="col text-start">
 									<label for="apellido_materno" class="form-label fw-bold">Apellido materno *:</label>
 									<input class="form-control" type="text" name="apellido_materno" id="apellido_materno" placeholder="Apellido materno" autocorrect="off" autocapitalize="off" aria-describedby="ayuda-apellido_materno" required>
-									<div id="ayuda-apellido_materno" class="form-text"></div>
+									<div id="ayuda-apellido-materno" class="form-text"></div>
 								</div>
 								<div class="col text-start">
 									<label for="ingreso_mensual" class="form-label fw-bold">Ingreso mensual:</label>

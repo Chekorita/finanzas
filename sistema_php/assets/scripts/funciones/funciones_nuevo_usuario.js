@@ -127,6 +127,8 @@ document.addEventListener("focusout", function(e){
             contenedor_ayuda.innerHTML = "<span class=\"text-danger\">EL USUARIO ES OBLIGATORIO</span>";
             evt_usuario.classList.remove("exito");
             evt_usuario.classList.add("error");
+            validar_usuario = false;
+            revisar_boton_guardar();
         }
     }
 });
@@ -238,10 +240,195 @@ function verificar_datos(){
     let input_nombre = document.querySelector("#nombre");
     let input_apellido_paterno = document.querySelector("#apellido_paterno");
     let input_apellido_materno = document.querySelector("#apellido_materno");
-    let input_ingreso_mensual = document.querySelector("#ingreso_mensual");
     let input_usuario = document.querySelector("#usuario");
     let input_contrasena = document.querySelector("#contrasena");
     let input_confirmar_contrasena = document.querySelector("#confirmar_contrasena");
+    let valor_nombre = input_nombre.value ? input_nombre.value : "";
+    let valor_apellido_paterno = input_apellido_paterno.value ? input_apellido_paterno.value : "";
+    let valor_apellido_materno = input_apellido_materno.value ? input_apellido_materno.value : "";
+    let valor_usuario = input_usuario.value ? input_usuario.value : "";
+    let valor_contrasena = input_contrasena.value ? input_contrasena.value : "";
+    let valor_confirmar_contrasena = input_confirmar_contrasena.value ? input_confirmar_contrasena.value : "";
+    var campo = {
+        valor: valor_nombre,
+        contenedor: "#nombre",
+        ayuda: "#ayuda-nombre",
+        valido: (valor_nombre.length > 0 && valor_nombre !== "") ? true : false,
+        mensaje: "Debe ingresar su nombre"
+    };
+    campos.push(campo);
+    var campo = {
+        valor: valor_apellido_paterno,
+        contenedor: "#apellido_paterno",
+        ayuda: "#ayuda-apellido-paterno",
+        valido: (valor_apellido_paterno.length > 0 && valor_apellido_paterno !== "") || (valor_apellido_materno.length > 0 && valor_apellido_materno !== "") ? true : false,
+        mensaje: "Debe ingresar su apellido al menos un apellido"
+    };
+    campos.push(campo);
+    var campo = {
+        valor: valor_apellido_materno,
+        contenedor: "#apellido_materno",
+        ayuda: "#ayuda-apellido-materno",
+        valido: (valor_apellido_paterno.length > 0 && valor_apellido_paterno !== "") || (valor_apellido_materno.length > 0 && valor_apellido_materno !== "") ? true : false,
+        mensaje: "Debe ingresar su apellido al menos un apellido"
+    };
+    campos.push(campo);
+    var campo = {
+        valor: valor_usuario,
+        contenedor: "#usuario",
+        ayuda: "#ayuda-usuario",
+        valido: (valor_usuario.length > 0 && valor_usuario !== "") ? true : false,
+        mensaje: "Debe ingresar un nombre de usuario válido"
+    };
+    campos.push(campo);
+    var campo = {
+        valor: valor_contrasena,
+        contenedor: "#contrasena",
+        ayuda: "#ayuda-contrasena",
+        valido: (valor_contrasena.length > 0 && valor_contrasena !== "" && revisar_contrasena(valor_contrasena)) ? true : false,
+        mensaje: "Debe ingresar una contraseña válida"
+    };
+    campos.push(campo);
+    var campo = {
+        valor: valor_confirmar_contrasena,
+        contenedor: "#confirmar_contrasena",
+        ayuda: "#ayuda-confirmar-contrasena",
+        valido: (valor_confirmar_contrasena.length > 0 && valor_confirmar_contrasena !== "" && valor_confirmar_contrasena === valor_contrasena) ? true : false,
+        mensaje: "Las contraseñas no coinciden"
+    };
+    campos.push(campo);
+    let validos = true;
+    campos.forEach(function(campo){
+		if(!campo.valido){
+			if(campo.contenedor !== ""){
+				let contenedor = document.querySelector(campo.contenedor);
+				let ayuda = document.querySelector(campo.ayuda);
+				let boton = document.querySelector("button#btn-guardar");
+				contenedor.classList.add('error');
+				contenedor.classList.remove('exito');
+				$(campo.contenedor).fadeIn('slow');
+				ayuda.classList.add('text-danger');
+				ayuda.classList.remove('text-success');
+				ayuda.innerHTML = campo.mensaje;
+				$(campo.ayuda).fadeIn('slow');
+				validos = false;
+				boton.disabled = true;
+				setTimeout(function(){
+					contenedor.classList.remove('error');
+					$(campo.contenedor).slideDown('slow', function(){
+						contenedor.classList.remove('error');
+					});
+					$(campo.ayuda).slideUp('slow', function(){
+						ayuda.innerHTML = "";
+						ayuda.classList.remove("text-danger");
+						ayuda.classList.add("text-success");
+					});
+					$(campo.ayuda).slideUp('slow', function(){
+						ayuda.innerHTML = "";
+					});
+					$(campo.ayuda).slideDown();
+				},2500);
+				setTimeout(function(){
+					boton.disabled = false;
+				}, 2500);
+			}
+		}else{
+			if(campo.contenedor !== ""){
+				let contenedor = document.querySelector(campo.contenedor);
+				let ayuda = document.querySelector(campo.ayuda);
+				$(campo.contenedor).fadeIn('slow', function(){
+					contenedor.classList.add('exito');
+					$(campo.contenedor).show();
+				});
+				setTimeout(function(){
+					$(campo.contenedor).slideDown('slow', function(){
+						ayuda.innerHTML = "";
+						contenedor.classList.remove('exito');
+						$(campo.contenedor).show();
+					});
+				},2500);
+			}
+		}
+	});
+    if(validos){
+		return true;
+	}else{
+		obtener_toast("error", "DATOS NO VÁLIDOS O INCOMPLETOS", "REVISE LOS DATOS INGRESADOS Y CORREGIR LOS ERRORES");
+        return false;
+	}
+}
+
+async function guardar_usuario(){
+    let contenedor_status = document.getElementById("contenedor-status");
+    var contenedor_bloqueo = document.getElementById("contenedor-bloquea");
+    let nombre = document.getElementById("nombre").value;
+    let apellido_paterno = document.getElementById("apellido_paterno").value;
+    let apellido_materno = document.getElementById("apellido_materno").value;
+    let ingreso_mensual = document.getElementById("ingreso_mensual").value;
+    let usuario = document.getElementById("usuario").value;
+    let contrasena = document.getElementById("contrasena").value;
+    let url = "./api/funciones_bd.php";
+    let datos = new FormData();
+    let parametros = {
+        nombre: nombre,
+        paterno: apellido_paterno,
+        materno: apellido_materno,
+        ingreso_mensual: ingreso_mensual,
+        usuario: usuario,
+        contrasena: contrasena
+    };
+    datos.append("funcion", "guardar_usuario");
+    datos.append("parametros", JSON.stringify(parametros));
+    contenedor_status.innerHTML = getAnimacionCarga("Cambiando la contraseña...","secondary");
+    contenedor_bloqueo.classList.remove("cargando_oculto");
+    contenedor_bloqueo.classList.add("cargando");
+    fetch(url, {
+        method: "POST",
+        body: datos
+    }).then(respuesta => respuesta.json())
+    .then((respuesta) => {
+        switch(respuesta.estado){
+            case 1:
+                contenedor_bloqueo.classList.remove("cargando");
+                contenedor_bloqueo.classList.add("cargando_oculto");
+                contenedor_status.innerHTML = "";
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: "Usuario registrado correctamente",
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if(result.isConfirmed){
+                        window.location.href = "./index.php";
+                    }
+                    if(result.isDismissed){
+                        window.location.href = "./index.php";
+                    }
+                    if(result.isDenied){
+                        window.location.href = "./index.php";
+                    }
+                });
+            break;
+            case 2:
+                contenedor_bloqueo.classList.remove("cargando");
+                contenedor_bloqueo.classList.add("cargando_oculto");
+                contenedor_status.innerHTML = "";
+                obtener_toast(tipo = "error", titulo = "ERROR", mensaje = respuesta.mensaje);
+            break;
+            default:
+                contenedor_bloqueo.classList.remove("cargando");
+                contenedor_bloqueo.classList.add("cargando_oculto");
+                contenedor_status.innerHTML = "";
+                obtener_toast(tipo = "error", titulo = "ERROR", mensaje = "No se pudo conectar con el servidor");
+            break;
+        }
+    })
+    .catch((error) => {
+        contenedor_bloqueo.classList.remove("cargando");
+        contenedor_bloqueo.classList.add("cargando_oculto");
+        contenedor_status.innerHTML = "";
+        obtener_toast(tipo = "error", titulo = "ERROR", mensaje = "No se pudo conectar con el servidor, favor de intentarlo más tarde");
+    });
 }
 
 let validar_usuario = false;
