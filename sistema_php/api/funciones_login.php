@@ -62,7 +62,7 @@
                 session_start();
                 $_SESSION['tiempo_logueo'] = time();
                 $_SESSION['sesion_iniciada'] = "sesion_iniciada";
-                $_SESSION['user'] = Crypto::encriptacion($usuario->idUsuario);
+                $_SESSION['user'] = Crypto::encriptacion($usuario->id_usuario);
                 $_SESSION['nombre_usuario'] = $usuario->nombre_completo;
                 $respuesta->estado = 1;
                 $respuesta->mensaje = "SESIÓN INICIADA CORRECTAMENTE.";

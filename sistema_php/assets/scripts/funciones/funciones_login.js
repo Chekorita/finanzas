@@ -12,7 +12,7 @@ async function iniciar_sesion(){
         return;
     }else{
         let contenedor_status = document.getElementById("contenedor-status");
-        let url = "./functions/funciones_login.php";
+        let url = "./api/funciones_login.php";
         let datos = new FormData();
         parametros = {
             "usuario": usuario,

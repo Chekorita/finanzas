@@ -10,6 +10,7 @@
 	//RUTAS DE LOS ARCHIVOS DEL SISTEMA
 	define ('CONFIG', URL.'config'.DS);
 	define ('FUNCTIONS', URL.'api'.DS);
+	define ('VIEWS', URL.'views'.DS);
 	define ('TEMPLATES', URL.'templates'.DS);
 	define ('INCLUDES', URL.'includes'.DS);
 	define ('INCLUDES_M', INCLUDES.'modules'.DS);
