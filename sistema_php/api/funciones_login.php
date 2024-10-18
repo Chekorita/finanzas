@@ -37,7 +37,7 @@
             $data = [];
             $dato = new stdClass();
             $dato = [
-                'tipo' => (string)4,
+                'tipo' => (int)4,
                 'valor' => (string)$parametros->usuario,
                 'nombre' => (string)':usuario',
             ];
