@@ -147,7 +147,6 @@ CREATE TABLE `tipos_ingresos` (
   `nombre` varchar(255) NOT NULL DEFAULT '' COMMENT 'Nombre del tipo de ingreso, puede ser tu paga de trabajo, transferencia, pago a tarjeta de crédito, etc.',
   `tipo` int(11) NOT NULL COMMENT '1 = de los de disposición, esto hará que aumente el dinero que tienes en cuentas a disposición, tu dinero real, 2 = es el pago que haces a tus cuentas de crédito',
   `requiere_persona` int(11) NOT NULL COMMENT '1 = Si, con esto hace que se desplieguen las personas y o empresas fijas que hayas registrado, así se despliegan para mantener una mejor control, por ejemplo para las transferencias, 2= No, es una tipo de gasto que no se puede registrar para una persona',
-  `id_usuario` int(11) NOT NULL COMMENT 'Es el ID del usuario que tiene este tipo de gasto',
   `id_usuario` int(11) NOT NULL COMMENT 'Es el ID del usuario al que se le va a ligar este tipo de ingreso',
   `onCreate` timestamp NOT NULL DEFAULT current_timestamp(),
   `onUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
